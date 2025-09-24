@@ -379,7 +379,9 @@ def nnUNet_predict_image(file_in: Union[str, Path, Nifti1Image], file_out, task_
     # Keep only voxel values corresponding to the roi_subset
     if roi_subset is not None:
         label_map = {k: v for k, v in label_map.items() if v in roi_subset}
-            
+
+    print(f"-chk is: {chk}, tta: {tta}") #PS Additions
+
     # for debugging
     # tmp_dir = file_in.parent / ("nnunet_tmp_" + ''.join(random.Random().choices(string.ascii_uppercase + string.digits, k=8)))
     # (tmp_dir).mkdir(exist_ok=True)
