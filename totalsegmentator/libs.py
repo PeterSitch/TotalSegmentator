@@ -354,6 +354,18 @@ def download_pretrained_weights(task_id):
     elif task_id == 920:
         weights_path = config_dir / "Dataset920_aortic_sinuses_cm_nativ_400subj"
 
+    # SI ADDITIONS
+    elif task_id == 1005:
+        weights_path = config_dir / "Dataset1005_CSIDataset_target_4kepochs"
+    elif task_id == 1006:
+        weights_path = config_dir / "Dataset1006_CSIDataset_gross_4kepochs"
+    elif task_id == 1007:
+        weights_path = config_dir / "Dataset1007_CSIDataset_intrabrain_4kepochs"
+
+    #PS ADDITIONS
+    elif task_id == 1000:
+        weights_path = config_dir / "Dataset1000"
+
     else:
         raise ValueError(f"For task_id {task_id} no download path was found.")
 

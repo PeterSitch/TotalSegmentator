@@ -156,6 +156,9 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
     remove_outside_dilation = None
     remove_mask = None
     
+    tta = False #PS addition
+    folds = [0] #PS addition
+
     if task == "total":
         if fast:
             task_id = 297
@@ -598,6 +601,38 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
         model = "3d_fullres"
         folds = [0]
 
+    elif task == "CSI_target": # SI ADDITIONS
+        task_id = 1005
+        resample = 0.9765625
+        trainer = "nnUNetTrainer_4000epochs_NoMirroring"
+        crop = None
+        model = "3d_fullres"
+        folds = [0]
+    elif task == "CSI_gross": # SI ADDITIONS
+        task_id = 1006
+        resample = 0.9765625
+        trainer = "nnUNetTrainer_4000epochs_NoMirroring"
+        crop = None
+        model = "3d_fullres"
+        folds = [0]
+    elif task == "CSI_intrabrain": # SI ADDITIONS
+        task_id = 1007
+        resample = 0.9765625
+        trainer = "nnUNetTrainer_4000epochs_NoMirroring"
+        crop = None
+        model = "3d_fullres"
+        folds = [0]
+
+    elif task == "WVV_target": #PS ADDITIONS
+        task_id = 1000
+        resample = 0.74404764
+        trainer = "nnUNetTrainer"#"nnUNetTrainerNoMirroring"
+        crop = None
+        model = "3d_fullres"
+        folds = [0,1,2,3,4] # [0]
+        tta = True
+        chk = 'checkpoint_best.pth'
+
     if crop_path is None:
         crop_path = output.parent if output is not None else None
     else:
@@ -721,7 +756,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
         crop = body_seg
         if verbose: print(f"Rough body segmentation generated in {time.time()-st:.2f}s")
 
-    folds = [0]  # None
+    #folds = [0]  # None #PS addition
     seg_img, ct_img, stats = nnUNet_predict_image(input, output, task_id, model=model, folds=folds,
                             trainer=trainer, tta=False, multilabel_image=ml, resample=resample,
                             crop=crop, crop_path=crop_path, task_name=task, nora_tag=nora_tag, preview=preview,

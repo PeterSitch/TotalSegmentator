@@ -15,8 +15,8 @@ def validate_device_type(value):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Segment 104 anatomical structures in CT images.",
-                                     epilog="Written by Jakob Wasserthal. If you use this tool please cite https://pubs.rsna.org/doi/10.1148/ryai.230024")
+    parser = argparse.ArgumentParser(description="CSI and WVV Target segmentation",
+                                     epilog="PBT Physics - PS/SI")
 
     parser.add_argument("-i", metavar="filepath", dest="input",
                         help="CT nifti image or folder of dicom slices or zip file of dicom slices.",
@@ -63,7 +63,9 @@ def main():
                         "brain_structures", "liver_vessels", "oculomotor_muscles",
                         "thigh_shoulder_muscles", "thigh_shoulder_muscles_mr", "lung_nodules", "kidney_cysts", 
                         "breasts", "ventricle_parts", "aortic_sinuses", "liver_segments", "liver_segments_mr",
-                        "total_highres_test", "craniofacial_structures", "abdominal_muscles", "teeth"],
+                        "total_highres_test", "craniofacial_structures", "abdominal_muscles", "teeth",
+                        "CSI_target", "CSI_gross", "CSI_intrabrain", # SI ADDITIONS
+                        "WVV_target",],  # PS ADDITIONS
                         help="Select which model to use. This determines what is predicted.",
                         default="total")
 

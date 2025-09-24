@@ -766,7 +766,58 @@ class_map = {
     },
     "test": {
         1: "carpal"
-    }
+    },
+
+    # SI ADDITIONS
+    "CSI_target": {
+        1: "ctv_low",
+    },
+
+    "CSI_gross": {
+        1: "kidney_l",
+        2: "kidney_r",
+        3: "heart",
+        4: "eye_l",
+        5: "eye_r",
+        6: "brain",
+        7: "lung_r",
+        8: "lung_l",
+        9: "thyroid",
+        10: "oesophagus",
+    },
+
+    "CSI_intrabrain": {
+        1: "cochlea_r",
+        2: "lens_l",
+        3: "cochlea_l",
+        4: "lens_r",
+        5: "lacrimalgland_r",
+        6: "lacrimalgland_l",
+        7: "pituitary",
+        8: "brainstem",
+        9: "opticnerve_r",
+        10: "opticnerve_l",
+        11: "opticchiasm",
+        12: "hippocampus_l",
+        13: "hippocampus_r",
+        14: "optictract_r",
+        15: "cerebellum",
+        16: "optictract_l",
+        17: "thalamus_l",
+        18: "thalamus_r",
+        19: "hypothalamus_r",
+        20: "hypothalamus_l",
+        21: "ventricles",
+        22: "retina_l",
+        23: "retina_r",
+        24: "cornea_l",
+        25: "cornea_r"
+    },
+    
+    # PS ADDITIONS
+    "WVV_target": {
+        1: "gtv_wvv",
+    },
 }
 
 
@@ -937,6 +988,57 @@ class_map_5_parts = {
         26: "costal_cartilages"
     },
 
+    # SI ADDITIONS
+    "class_map_part_csi_target": {
+        1: "ctv_low",
+    },
+
+    "class_map_part_csi_gross": {
+        1: "kidney_l",
+        2: "kidney_r",
+        3: "heart",
+        4: "eye_l",
+        5: "eye_r",
+        6: "brain",
+        7: "lung_r",
+        8: "lung_l",
+        9: "thyroid",
+        10: "oesophagus",
+    },
+
+    "class_map_part_csi_intrabrain": {
+        1: "cochlea_r",
+        2: "lens_l",
+        3: "cochlea_l",
+        4: "lens_r",
+        5: "lacrimalgland_r",
+        6: "lacrimalgland_l",
+        7: "pituitary",
+        8: "brainstem",
+        9: "opticnerve_r",
+        10: "opticnerve_l",
+        11: "opticchiasm",
+        12: "hippocampus_l",
+        13: "hippocampus_r",
+        14: "optictract_r",
+        15: "cerebellum",
+        16: "optictract_l",
+        17: "thalamus_l",
+        18: "thalamus_r",
+        19: "hypothalamus_r",
+        20: "hypothalamus_l",
+        21: "ventricles",
+        22: "retina_l",
+        23: "retina_r",
+        24: "cornea_l",
+        25: "cornea_r"
+    },
+
+    # PS ADDITIONS
+    "class_map_part_wvv_target": {
+        1: "gtv_wvv",
+    },
+
     "test": class_map["test"]
 }
 
@@ -1042,6 +1144,16 @@ map_taskid_to_partname_ct = {
     295: "class_map_part_ribs",
 
     517: "test",
+
+    #PS ADDITIONS
+    1000:"class_map_part_wvv_target", 
+
+
+    #SI ADDITIONS
+    1005: "class_map_part_csi_target",  
+    1006: "class_map_part_csi_gross",
+    1007: "class_map_part_csi_intrabrain"
+
 }
 
 map_taskid_to_partname_mr = {
