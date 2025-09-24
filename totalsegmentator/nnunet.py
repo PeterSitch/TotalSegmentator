@@ -186,7 +186,7 @@ def nnUNetv2_predict(dir_in, dir_out, task_id, model="3d_fullres", folds=None,
                      trainer="nnUNetTrainer", tta=False,
                      num_threads_preprocessing=3, num_threads_nifti_save=2,
                      plans="nnUNetPlans", device="cuda", quiet=False, step_size=0.5,
-                     save_probabilities_path=None):
+                     save_probabilities_path=None, chk=False):
     """
     Identical to bash function nnUNetv2_predict
     """
@@ -195,6 +195,10 @@ def nnUNetv2_predict(dir_in, dir_out, task_id, model="3d_fullres", folds=None,
 
     # if task_id in [291, 292, 293, 294, 295, 957]:
     #     plans = "nnUNetResEncUNetLPlans_8"
+
+    if task_id == 1000:  #PS Additions
+        plans =  "nnUNetResEncUNetMPlans"
+        #print(f"p:chk is: {chk}, tta: {tta}")
 
     model_folder = get_output_folder(task_id, trainer, plans, model)
 
@@ -222,7 +226,8 @@ def nnUNetv2_predict(dir_in, dir_out, task_id, model="3d_fullres", folds=None,
     else:
         save_probabilities = True
     continue_prediction = False
-    chk = "checkpoint_final.pth"
+    if not chk:
+        chk = "checkpoint_final.pth"
     npp = num_threads_preprocessing
     nps = num_threads_nifti_save
     prev_stage_predictions = None
@@ -330,7 +335,7 @@ def nnUNet_predict_image(file_in: Union[str, Path, Nifti1Image], file_out, task_
                          device="cuda", exclude_masks_at_border=True, no_derived_masks=False,
                          v1_order=False, stats_aggregation="mean", remove_small_blobs=False,
                          normalized_intensities=False, nnunet_resampling=False,
-                         save_probabilities=None, cascade=None, remove_outside_mask=None, remove_outside_dilation=None):
+                         save_probabilities=None, cascade=None, remove_outside_mask=None, remove_outside_dilation=None,chk=False):
     """
     crop: string or a nibabel image
     resample: None or float (target spacing for all dimensions) or list of floats
@@ -549,7 +554,7 @@ def nnUNet_predict_image(file_in: Union[str, Path, Nifti1Image], file_out, task_
                         nnUNetv2_predict(tmp_dir, tmp_dir, tid, model, folds, trainer, tta,
                                          nr_threads_resampling, nr_threads_saving,
                                          device=device, quiet=quiet, step_size=step_size,
-                                         save_probabilities_path=save_probabilities)
+                                         save_probabilities_path=save_probabilities, chk=chk)
                     # iterate over models (different sets of classes)
                     for img_part in img_parts:
                         (tmp_dir / f"{img_part}.nii.gz").rename(tmp_dir / "parts" / f"{img_part}_{tid}.nii.gz")
@@ -571,7 +576,7 @@ def nnUNet_predict_image(file_in: Union[str, Path, Nifti1Image], file_out, task_
                     nnUNetv2_predict(tmp_dir, tmp_dir, task_id, model, folds, trainer, tta,
                                      nr_threads_resampling, nr_threads_saving,
                                      device=device, quiet=quiet, step_size=step_size,
-                                     save_probabilities_path=save_probabilities)
+                                     save_probabilities_path=save_probabilities, chk=chk)
             # elif test == 2:
             #     print("WARNING: Using reference seg instead of prediction for testing.")
             #     shutil.copy(Path("tests") / "reference_files" / "example_seg_fast.nii.gz", tmp_dir / f"s01.nii.gz")
