@@ -101,7 +101,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
                      statistics_exclude_masks_at_border=True, no_derived_masks=False,
                      v1_order=False, fastest=False, roi_subset_robust=None, stats_aggregation="mean",
                      remove_small_blobs=False, statistics_normalized_intensities=False, 
-                     robust_crop=False, higher_order_resampling=False, save_probabilities=None):
+                     robust_crop=False, higher_order_resampling=False, save_probabilities=None, chk=False):
     """
     Run TotalSegmentator from within python.
 
@@ -710,7 +710,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
             download_pretrained_weights(crop_model_task)
             
             organ_seg, _, _ = nnUNet_predict_image(input, None, crop_model_task, model="3d_fullres", folds=[0],
-                                trainer=crop_trainer, tta=False, multilabel_image=True, resample=crop_spacing,
+                                trainer=crop_trainer, tta=tta, multilabel_image=True, resample=crop_spacing,
                                 crop=None, crop_path=None, task_name=crop_task, nora_tag="None", preview=False,
                                 save_binary=False, nr_threads_resampling=nr_thr_resamp, nr_threads_saving=1,
                                 crop_addon=None, output_type=output_type, statistics=False,
@@ -748,7 +748,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
         st = time.time()
         if not quiet: print("Generating rough body segmentation...")
         body_seg, _, _ = nnUNet_predict_image(input, None, 300, model="3d_fullres", folds=[0],
-                            trainer="nnUNetTrainer", tta=False, multilabel_image=True, resample=6.0,
+                            trainer="nnUNetTrainer", tta=tta, multilabel_image=True, resample=6.0,
                             crop=None, crop_path=None, task_name="body", nora_tag="None", preview=False,
                             save_binary=True, nr_threads_resampling=nr_thr_resamp, nr_threads_saving=1,
                             crop_addon=crop_addon, output_type=output_type, statistics=False,
@@ -758,7 +758,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
 
     #folds = [0]  # None #PS addition
     seg_img, ct_img, stats = nnUNet_predict_image(input, output, task_id, model=model, folds=folds,
-                            trainer=trainer, tta=False, multilabel_image=ml, resample=resample,
+                            trainer=trainer, tta=tta, multilabel_image=ml, resample=resample,
                             crop=crop, crop_path=crop_path, task_name=task, nora_tag=nora_tag, preview=preview,
                             nr_threads_resampling=nr_thr_resamp, nr_threads_saving=nr_thr_saving,
                             force_split=force_split, crop_addon=crop_addon, roi_subset=roi_subset,
@@ -769,7 +769,7 @@ def totalsegmentator(input: Union[str, Path, Nifti1Image], output: Union[str, Pa
                             stats_aggregation=stats_aggregation, remove_small_blobs=remove_small_blobs,
                             normalized_intensities=statistics_normalized_intensities, 
                             nnunet_resampling=higher_order_resampling, save_probabilities=save_probabilities,
-                            cascade=cascade, remove_outside_mask=remove_mask, remove_outside_dilation=remove_outside_dilation)
+                            cascade=cascade, remove_outside_mask=remove_mask, remove_outside_dilation=remove_outside_dilation, chk=chk)
     seg = seg_img.get_fdata().astype(np.uint8)
 
     try:
